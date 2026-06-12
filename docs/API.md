@@ -96,7 +96,7 @@ Request:
 ```json
 {
   "amount": 10000,
-  "type": "add" // or "subtract"
+  "type": "add"
 }
 ```
 
@@ -123,49 +123,12 @@ Response:
 ]
 ```
 
-### Create Plan (Admin Only)
-**POST** `/plans` (Protected, Admin)
-
-Request:
-```json
-{
-  "name": "Aurora Tier",
-  "amount": 3000,
-  "duration": 30,
-  "dailyReturn": 5,
-  "totalReturn": 4500,
-  "description": "Entry level investment plan"
-}
-```
-
 ---
 
 ## Investment Endpoints
 
 ### Get User Investments
 **GET** `/investments` (Protected)
-
-Response:
-```json
-[
-  {
-    "_id": "investment_id",
-    "userId": "user_id",
-    "planId": {
-      "_id": "plan_id",
-      "name": "Aurora Tier",
-      "amount": 3000
-    },
-    "amount": 3000,
-    "startDate": "2026-06-12T00:00:00Z",
-    "endDate": "2026-07-12T00:00:00Z",
-    "dailyReturn": 150,
-    "totalProjectedReturn": 4500,
-    "earnedAmount": 750,
-    "status": "active"
-  }
-]
-```
 
 ### Purchase Plan
 **POST** `/investments/purchase` (Protected)
@@ -177,36 +140,12 @@ Request:
 }
 ```
 
-Response:
-```json
-{
-  "message": "Investment created successfully",
-  "investment": { /* investment object */ },
-  "wallet": { /* updated wallet */ }
-}
-```
-
 ---
 
 ## Transaction Endpoints
 
 ### Get Transactions
 **GET** `/transactions` (Protected)
-
-Response:
-```json
-[
-  {
-    "_id": "transaction_id",
-    "userId": "user_id",
-    "type": "deposit",
-    "amount": 10000,
-    "status": "pending",
-    "description": "Deposit request",
-    "createdAt": "2026-06-12T00:00:00Z"
-  }
-]
-```
 
 ### Request Deposit
 **POST** `/transactions/deposit` (Protected)
@@ -235,24 +174,6 @@ Request:
 ### Get Referral Info
 **GET** `/referrals` (Protected)
 
-Response:
-```json
-{
-  "_id": "referral_id",
-  "referrerId": "user_id",
-  "referralCode": "ABC12345",
-  "totalReferrals": 5,
-  "totalEarnings": 2500,
-  "commissionRate": 5,
-  "referredUsers": [
-    {
-      "userId": "referred_user_id",
-      "joinDate": "2026-06-10T00:00:00Z"
-    }
-  ]
-}
-```
-
 ### Join via Referral
 **POST** `/referrals/join` (Protected)
 
@@ -266,9 +187,6 @@ Request:
 ---
 
 ## Admin Endpoints
-
-### Get Pending Transactions
-**GET** `/admin/transactions/pending` (Protected, Admin Only)
 
 ### Approve Transaction
 **POST** `/admin/transactions/:id/approve` (Protected, Admin Only)
@@ -319,22 +237,3 @@ Request:
   "message": "I've resolved the issue"
 }
 ```
-
----
-
-## Error Responses
-
-All errors return a status code with message:
-
-```json
-{
-  "message": "Error description"
-}
-```
-
-Common status codes:
-- `400` - Bad Request
-- `401` - Unauthorized
-- `403` - Forbidden (Admin required)
-- `404` - Not Found
-- `500` - Server Error

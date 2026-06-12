@@ -92,14 +92,14 @@
 
 ### Option 2: From Root Directory
 ```bash
-npm install-all  # Install all dependencies
-npm run dev      # Run both backend and frontend
+npm install-all
+npm run dev
 ```
 
 ## First Admin Setup
 
-1. Register a user account through the app
-2. Connect to MongoDB directly and update the user role:
+1. Register a user account
+2. Connect to MongoDB and update role:
    ```javascript
    db.users.updateOne(
      { email: "your-admin-email@example.com" },
@@ -107,77 +107,19 @@ npm run dev      # Run both backend and frontend
    )
    ```
 
-3. Login with the admin account - you'll see the admin dashboard
-
-## Default Investment Plans
-
-The system comes with predefined plans:
-- Aurora Tier: ₦3,000
-- Nova Tier: ₦6,000
-- Selene Tier: ₦12,000
-- Elysia Tier: ₦15,000
-- Celestia Tier: ₦30,000
-- Lumina Tier: ₦50,000
-- Zenith Tier: ₦120,000
-
-You can create, update, or delete plans from the admin panel.
+3. Login with admin account
 
 ## Troubleshooting
 
-### Backend won't start
-- Check if MongoDB is running
-- Verify PORT 5000 is not in use
-- Check `.env` file configuration
+### MongoDB won't connect
+- Ensure MongoDB service is running
+- Verify connection string in `.env`
+- Check MongoDB Atlas IP whitelist
 
-### Frontend can't connect to API
-- Ensure backend is running on port 5000
+### Frontend can't reach backend
+- Verify backend is running on port 5000
 - Check `NEXT_PUBLIC_API_URL` in `.env.local`
-- Check browser console for CORS errors
+- Review browser console for errors
 
-### MongoDB connection error
-- Verify MongoDB is running: `mongosh` should connect
-- Check connection string in `.env`
-- For MongoDB Atlas, whitelist your IP address
-
-## Project Structure
-
-```
-Way-max/
-├── backend/
-│   ├── src/
-│   │   ├── models/        # MongoDB schemas
-│   │   ├── routes/        # API endpoints
-│   │   ├── middleware/    # Auth, validation
-│   │   └── index.js       # Server entry point
-│   ├── .env.example
-│   └── package.json
-├── frontend/
-│   ├── app/
-│   │   ├── (auth)/        # Login/Register
-│   │   ├── (dashboard)/   # Main app
-│   │   └── admin/         # Admin panel
-│   ├── components/
-│   ├── styles/
-│   └── package.json
-├── docs/
-│   └── API.md
-└── README.md
-```
-
-## Next Steps
-
-1. Test authentication: Register and login
-2. Test wallet system: Request a deposit
-3. Test admin approval: Approve deposit as admin
-4. Test investments: Purchase an investment plan
-5. Test referrals: Copy and share referral link
-
-## Production Deployment
-
-For production:
-1. Update `.env` with production values
-2. Set `NODE_ENV=production`
-3. Use a production database (MongoDB Atlas)
-4. Deploy backend to a service like Heroku, Railway, or AWS
-5. Deploy frontend to Vercel or Netlify
-6. Update `FRONTEND_URL` and `NEXT_PUBLIC_API_URL` to production URLs
+### Port already in use
+- Change PORT in `.env` or use: `PORT=5001 npm run dev`
